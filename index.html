@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+	<script>
+
+		// JSON dos item
+		
+		let data = [{
+			id: "78600010",
+			name: "Tic Tac 16g",
+			price: 4.5,
+		},{
+			id: "7896326963999",
+			name: "Caneta Corretiva CIS 4ml",
+			price: 7.6,
+		}]
+
+		// aq é o codigo do scanner
+		
+		var barcode = '';
+		var interval;
+		document.addEventListener('keydown', function(evt) {
+			if (interval)
+				clearInterval(interval);
+			if (evt.key == 'Enter') {
+				if (barcode)
+					handleBarcode(barcode);
+				barcode = '';
+				return;
+			}
+			if (evt.key != 'Shift')
+				barcode += evt.key;
+			interval = setInterval(() => barcode = '', 20);
+			if (evt.key == 'c') {
+				window.open("http://www.newlandna.com/Document/Portuguese/CONFIGURACAO%20RAPIDA%20-%20Portuguese%20Edition.pdf");
+			}
+			if (evt.key == 'f') {
+				
+			}
+			if (evt.key == 'ArrowLeft') {
+				document.getElementById("manual").style.display = "block";
+				document.getElementById("manual-input").focus()
+			}
+			if (evt.key == 'ArrowRight') {
+				if (!document.getElementById("manual-input").value == "") {
+					document.getElementById("manual").style.display = "none";
+					var input = document.getElementById("manual-input").value;
+	
+					handleBarcode(input);
+					input = '';
+				} else {
+					document.getElementById("manual").style.display = "none";
+				}
+			}
+		})
+
+		// aqui é o codigo do json
+		
+		function getNameUsingFind(id) {
+
+			return data.find(item => item.id === id).name;
+		}
+
+		function getPriceUsingFind(id) {
+			var totaldiv = document.getElementById("total");
+			var item = data.find(item => item.id === id).price;
+
+			totaldiv.innerHTML = Number((totaldiv.innerHTML).slice(0, 2)) + item
+
+			return item + "R$"
+		}
+
+		// esse aq é pra colocar na tabela
+		
+		function handleBarcode(scanned_barcode) {
+			var tabela = document.getElementById("tabela");
+
+			var row = tabela.insertRow(1)
+
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+
+			cell1.innerHTML = scanned_barcode
+
+			try {
+				cell2.innerHTML = getNameUsingFind(scanned_barcode);
+				cell3.innerHTML = getPriceUsingFind(scanned_barcode);
+			} catch (err) {
+				var diverr = document.getElementById("err");
+
+				diverr.style.display = "block";
+				diverr.innerHTML = `Error, Cannot Catch ${scanned_barcode} Item`
+				setTimeout(() => {
+					diverr.style.display = "none";
+					diverr.innerHTML = "";
+
+					tabela.deleteRow(1)
+				}, 4000)
+			}
+		}
+</script>
+</head>
+
+<body>
+	<h1>Mercado do Jaum</h1>
+
+ <!-- html -->
+	<div class="tabela" style="overflow-y:auto;">
+		<table id="tabela">
+			<tr>
+				<th>ID</th>
+				<th>NOME</th>
+				<th>PREÇO</th>
+			</tr>
+		</table>
+	</div>
+	<div class="total">
+		Total:   
+		<div id="total">
+			0
+		</div>
+	</div>
+	<div id="manual" class="manual" style="display: none;">
+		Insira O Codigo Manualmente
+		<input type="text" class="manual-input" id="manual-input" size="30">
+	</div>
+	<div style="display: none;" id="err" class="err">
+	</div>
+</body>
+	<div id="last-barcode"></div>
+</html>
