@@ -4,10 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
+  <title>MeuMercadoooo</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
 	<script>
-
 		// JSON dos item
 		
 		let data = [{
@@ -44,7 +43,8 @@
 				window.open("http://www.newlandna.com/Document/Portuguese/CONFIGURACAO%20RAPIDA%20-%20Portuguese%20Edition.pdf");
 			}
 			if (evt.key == 'f') {
-				
+				document.getElementById("firstp").style.display = 'none';
+				document.getElementById("secondp").style.display = 'block';
 			}
 			if (evt.key == 'ArrowLeft') {
 				document.getElementById("manual").style.display = "block";
@@ -112,29 +112,37 @@
 </head>
 
 <body>
+	<div id="firstp">
 	<h1>Mercado do Jaum</h1>
 
  <!-- html -->
 	<div class="tabela" style="overflow-y:auto;">
 		<table id="tabela">
 			<tr>
-				<th>ID</th>
-				<th>NOME</th>
-				<th>PREÇO</th>
-			</tr>
-		</table>
-	</div>
-	<div class="total">
-		Total:   
-		<div id="total">
-			0
+					<th>ID</th>
+					<th>NOME</th>
+					<th>PREÇO</th>
+				</tr>
+			</table>
+		</div>
+		<div class="total">
+			Total:   
+			<div id="total">
+				0
+			</div>
+		</div>
+		<div id="manual" class="manual" style="display: none;">
+			Insira O Codigo Manualmente
+			<input type="text" class="manual-input" id="manual-input" size="30">
+		</div>
+		<div style="display: none;" id="err" class="err">
 		</div>
 	</div>
-	<div id="manual" class="manual" style="display: none;">
-		Insira O Codigo Manualmente
-		<input type="text" class="manual-input" id="manual-input" size="30">
-	</div>
-	<div style="display: none;" id="err" class="err">
+	<div id="secondp">
+		<div class="loadingscreen" id="loadingscreen">
+			<div class="loader"></div>
+			<p>Preparando Formas <br> De Pagamento</p>
+		</div>
 	</div>
 </body>
 	<div id="last-barcode"></div>
